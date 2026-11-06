@@ -43,3 +43,9 @@ do
     break
   fi
 done
+
+$PSQL "UPDATE users SET games_played = games_played + 1,
+  best_game = LEAST(COALESCE(best_game, $NUMBER_OF_GUESSES), $NUMBER_OF_GUESSES)
+  WHERE username='$USERNAME'" > /dev/null
+
+echo "You guessed it in $NUMBER_OF_GUESSES tries. The secret number was $SECRET_NUMBER. Nice job!"
