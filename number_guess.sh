@@ -20,3 +20,26 @@ fi
 
 # Print the welcome and first prompt in one write so each prompt reads exactly one guess
 printf '%s\nGuess the secret number between 1 and 1000:\n' "$WELCOME"
+
+NUMBER_OF_GUESSES=0
+while true
+do
+  read GUESS
+  if [[ ! $GUESS =~ ^-?[0-9]+$ ]]
+  then
+    echo "That is not an integer, guess again:"
+    continue
+  fi
+
+  (( NUMBER_OF_GUESSES++ ))
+
+  if (( GUESS < SECRET_NUMBER ))
+  then
+    echo "It's higher than that, guess again:"
+  elif (( GUESS > SECRET_NUMBER ))
+  then
+    echo "It's lower than that, guess again:"
+  else
+    break
+  fi
+done
